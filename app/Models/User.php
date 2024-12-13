@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function r_tasks(){
+        return $this->belongsToMany(Task::class)->using(TaskUser::class);
+    }
+
+    public function r_role(){
+        return $this->belongsTo(Role::class);
+    }
 }

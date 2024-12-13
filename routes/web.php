@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', [GuestController::class, 'showLogin'])->middleware('guest')->name('login');
+Route::post('login', [GuestController::class, 'submitLogin'])->middleware('guest');
+Route::get('logout', [GuestController::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [GuestController::class, 'home']);
+    Route::get('dashboard', [UserController::class, 'dashboard']);
+
+    Route::group(['prefix' => 'task'], function () {
+        Route::get('assign', [TestController::class, 'assignTask']);
+        Route::get('delete', [TestController::class, 'deleteTask']);
+    });
+
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('allowed', [UserController::class, 'allowedUser'])->can('hasPermission');
+        Route::get('not-allowed', [UserController::class, 'notAllowedUser'])->can('hasPermission');
+    });
 });

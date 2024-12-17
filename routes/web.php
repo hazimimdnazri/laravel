@@ -24,8 +24,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [UserController::class, 'dashboard']);
 
     Route::group(['prefix' => 'task'], function () {
+        Route::get('/', [TestController::class, 'showTask']);
         Route::get('assign', [TestController::class, 'assignTask']);
         Route::get('delete', [TestController::class, 'deleteTask']);
+    });
+
+    Route::group(['prefix' => 'game'], function () {
+        Route::get('add', [TestController::class, 'addGame']);
     });
 
     Route::group(['prefix' => 'user'], function () {

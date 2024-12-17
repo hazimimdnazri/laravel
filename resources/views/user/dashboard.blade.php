@@ -11,5 +11,7 @@
     <a href="{{ route('logout') }}"><button>Logout</button></a>
     <a href="{{ url('user/allowed') }}"><button>You can enter this</button></a>
     <a href="{{ url('user/not-allowed') }}"><button>You cannot enter this</button></a>
+    <a href="{{ url('game/add') }}"><button>Add Games</button></a>
+    <a href="{{ url('task') }}"><button>Tasks</button></a>
 </body>
 </html>

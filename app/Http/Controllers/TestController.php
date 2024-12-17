@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Game;
 
 class TestController extends Controller
 {
+
+    public function showTask(){
+        $user = User::find(2);
+        return $user->r_tasks;
+    }
 
     public function assignTask(){
         $user = User::find(2);
         $tasks = Task::where('flag', '1')->get();
 
-        if($user->r_tasks()->syncWithoutDetaching($tasks)){
+        if($user->r_tasks()->sync($tasks)){
             return response()->json([
                 'message' => 'Task assigned',
             ]);
@@ -36,6 +42,21 @@ class TestController extends Controller
         return response()->json([
             'message' => 'No task to be deleted',
         ]);
+    }
+
+    public function addGame(){
+        $game = new Game;
+
+        $game->name = 'Game 1';
+        $game->description = 'Description 1';
+    
+
+
+        if($game->save()){
+            return response()->json([
+                'message' => 'Game added',
+            ]);
+        }
     }
 }
 

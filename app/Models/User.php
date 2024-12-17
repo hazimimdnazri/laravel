@@ -44,7 +44,7 @@ class User extends Authenticatable
     ];
 
     public function r_tasks(){
-        return $this->belongsToMany(Task::class)->using(TaskUser::class);
+        return $this->belongsToMany(Task::class)->withPivot('assigned_by');
     }
 
     public function r_role(){
